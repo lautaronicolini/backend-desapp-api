@@ -1,0 +1,3 @@
+language: kotlin
+sudo: false
+script: gradle assemble
