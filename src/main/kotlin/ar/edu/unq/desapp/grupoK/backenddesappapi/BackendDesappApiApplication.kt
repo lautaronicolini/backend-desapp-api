@@ -9,3 +9,8 @@ class BackendDesappApiApplication
 fun main(args: Array<String>) {
 	runApplication<BackendDesappApiApplication>(*args)
 }
+
+@RestController
+class Hola { 
+  fun index(): string = "hola!"
+}
