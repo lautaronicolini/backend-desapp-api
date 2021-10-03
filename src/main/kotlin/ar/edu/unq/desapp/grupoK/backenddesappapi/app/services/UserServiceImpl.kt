@@ -31,4 +31,9 @@ class UserServiceImpl{ //TODO calls to userDAO to interact with DB
 
     }
 
+    fun userExists(email: String) : Boolean {
+        //val exists=//dao.find()
+        return false
+    }
+
 }

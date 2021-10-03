@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-
+@CrossOrigin(origins = ["http://localhost:3000"])  //enables CORS for the whole controller. It allows requests from a diff origin
 @RestController
 @RequestMapping("api")
 
@@ -21,6 +21,7 @@ class UserController (private val userService : UserServiceImpl) {
         return ResponseEntity("Hello World!", HttpStatus.OK)
     }
 
+    @CrossOrigin
     @PostMapping("/register")
     fun registerUser( @RequestBody body: RegisterData): ResponseEntity<String> {
         // persisting the user
@@ -36,7 +37,7 @@ class UserController (private val userService : UserServiceImpl) {
 
           userService.createUser(user)
       }catch (e :Exception){
-          return  ResponseEntity.badRequest().body("user could not be registered")
+          return  ResponseEntity.badRequest().body("user could not be registered: ${e.message}")
       }
         return ResponseEntity.ok("User was registered")
     }
