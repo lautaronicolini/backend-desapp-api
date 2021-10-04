@@ -24,6 +24,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	runtimeOnly("com.h2database:h2")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+	implementation("com.github.jkcclemens:khttp:0.1.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -36,7 +37,11 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
 repositories {
 	mavenCentral()
+	maven {
+		url = uri("https://jitpack.io")
+	}
 }
 
