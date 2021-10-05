@@ -3,6 +3,8 @@ package ar.edu.unq.desapp.grupoK.backenddesappapi.app.services
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.jsonArray
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
@@ -33,7 +35,10 @@ class UserServiceImpl{ //TODO calls to userDAO to interact with DB
 
     fun userExists(email: String) : Boolean {
         //val exists=//dao.find()
-        return false
+        var result =false
+        val userList: JsonArray = Json.parseToJsonElement((String(Files.readAllBytes(resource.toPath())))).jsonArray
+        return result
+
     }
 
 }

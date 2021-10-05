@@ -44,7 +44,7 @@ import javax.persistence.Id
    @NotNull
    //@Column(name ="CVU")
    //@NotBlank(CVU = "Name is mandatory")
-   var CVU: String = "";
+   var cvu: String = "";
 
    @NotNull
    //@Column(name ="walletAddress")

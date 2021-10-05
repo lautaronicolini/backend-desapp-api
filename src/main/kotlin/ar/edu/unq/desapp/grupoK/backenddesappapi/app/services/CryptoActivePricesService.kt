@@ -2,7 +2,6 @@ package ar.edu.unq.desapp.grupoK.backenddesappapi.app.services
 
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.CryptoActive
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.Price
-import khttp.get
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
@@ -14,12 +13,11 @@ import org.springframework.http.MediaType
 import org.springframework.scheduling.annotation.Async
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
-import java.lang.Exception
 import java.nio.file.Files
 import java.util.*
 
 
-class CryptoActivePricesService {
+open class CryptoActivePricesService {
     fun GetAllCryptoActivePrices(): List<CryptoActive>{
         var result = mutableListOf<CryptoActive>()
         var cryptoActivesFile = ClassPathResource("CryptoActives.json").file

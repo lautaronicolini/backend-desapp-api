@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(origins = ["http://localhost:3000"])  //enables CORS for the whole controller. It allows requests from a diff origin
+@CrossOrigin(origins = ["http://localhost:3000"])  //enables CORS for this controller. It allows requests from a diff origin
 @RestController
 @RequestMapping("api")
 
@@ -32,7 +32,7 @@ class UserController (private val userService : UserServiceImpl) {
           user.address = body.address
           user.email = body.email
           user.password = body.password
-          user.CVU = body.CVU
+          user.cvu = body.cvu
           user.walletAddress = body.walletAddress
 
           userService.createUser(user)
