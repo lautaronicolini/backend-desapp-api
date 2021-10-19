@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto
 
-class RegisterData {
+class RegisterDto {
     val name :String = ""
     val lastName :String= ""
     val address :String= ""

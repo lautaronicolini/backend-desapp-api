@@ -1,8 +1,14 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.h2
 
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.datasource.DriverManagerDataSource
+import javax.sql.DataSource
+
 class DatabaseConfig {
     // edit security configs to use db as datasource to authenticate users
-/*
+
     @Configuration
     class DatabaseConfig {
 
@@ -26,5 +32,5 @@ class DatabaseConfig {
                 username = dbUsername
                 password = dbPassword
             }
-    }*/
+    }
 }
