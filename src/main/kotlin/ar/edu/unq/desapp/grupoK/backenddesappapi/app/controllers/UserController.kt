@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*
 
 class UserController (private val userService : UserServiceImpl) {
 
-    //val back CriptoP2P = getCriptoP2P();
-    //val  userCont =  UserController();
-
     @GetMapping("/hello")
     open fun hello(): ResponseEntity<String?>? {
         return ResponseEntity("Hello World!", HttpStatus.OK)
