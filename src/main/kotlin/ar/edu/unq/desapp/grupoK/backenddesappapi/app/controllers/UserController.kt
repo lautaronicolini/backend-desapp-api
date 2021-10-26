@@ -39,5 +39,10 @@ class UserController (private val userService : UserServiceImpl) {
         return ResponseEntity.ok("User was registered")
     }
 
+    @GetMapping("/users")
+    fun getAllUsers(): MutableIterable<User> {
+        return userService.getAllUsers()
+    }
+
 
 }

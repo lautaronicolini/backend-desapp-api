@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 //This interface will be autowired in UserServiceImpl for implementing repository methods.
-/* CrudRepository interface:
+/* CrudRepository parent interface:
 -Saves the given entity.
 -Returns the entity identified by the given id.
 -Returns all entities.
