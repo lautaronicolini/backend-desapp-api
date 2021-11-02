@@ -20,7 +20,11 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("junit:junit:4.13.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation ("org.mockito:mockito-core:2.19.0")
+	testImplementation ("io.mockk:mockk:1.9.3")
+
 	implementation("org.springframework.boot:spring-boot-devtools")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	runtimeOnly("com.h2database:h2")
