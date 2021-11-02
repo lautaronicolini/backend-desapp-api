@@ -42,6 +42,8 @@ import javax.persistence.*
    var walletAddress: String = ""
 
    @NotNull
-   //@NotBlank(message = "Wallet Address is mandatory")
    var reputation: Int = 0
+
+  @NotNull
+  var transactions: Int = 0
 }
