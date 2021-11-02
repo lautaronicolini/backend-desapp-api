@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.controllers
 
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterData
+//import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterData
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserServiceImpl
 import org.springframework.http.HttpStatus
@@ -18,7 +18,7 @@ class UserController (private val userService : UserServiceImpl) {
         return ResponseEntity("Hello World!", HttpStatus.OK)
     }
 
-    @CrossOrigin
+    /*@CrossOrigin
     @PostMapping("/register")
     fun registerUser( @RequestBody body: RegisterData): ResponseEntity<String> {
         // persisting the user
@@ -37,7 +37,7 @@ class UserController (private val userService : UserServiceImpl) {
           return  ResponseEntity.badRequest().body("user could not be registered: ${e.message}")
       }
         return ResponseEntity.ok("User was registered")
-    }
+    }*/
 
     @GetMapping("/users")
     fun getAllUsers(): MutableIterable<User> {

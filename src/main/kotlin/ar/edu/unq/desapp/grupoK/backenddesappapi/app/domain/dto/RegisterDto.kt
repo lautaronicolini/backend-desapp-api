@@ -8,6 +8,4 @@ class RegisterDto {
     val password :String = ""
     val cvu :String =""
     val walletAddress :String =""
-
-
 }
