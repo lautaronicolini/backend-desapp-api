@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 
 @Repository
 @Service
-class UserServiceImpl{ //TODO calls to userDAO to interact with DB
+class UserService {
 
     @Autowired
     var userRepo: UserRepository? = null
@@ -32,5 +32,6 @@ class UserServiceImpl{ //TODO calls to userDAO to interact with DB
     fun findUsersByEmail(email: String): List<User> {
         return getAllUsers().filter { user -> user.email == email }
     }
+
 
 }

@@ -1,8 +1,8 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.controllers
 
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterData
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDto
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserServiceImpl
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("api")
 
-class UserController (private val userService : UserServiceImpl) {
+class UserController (private val userService : UserService) {
 
     @GetMapping("/hello")
-    open fun hello(): ResponseEntity<String?>? {
+     fun hello(): ResponseEntity<String?>? {
         return ResponseEntity("Hello World!", HttpStatus.OK)
     }
 
     @CrossOrigin
     @PostMapping("/register")
-    fun registerUser( @RequestBody body: RegisterData): ResponseEntity<String> {
+    fun registerUser( @RequestBody body: RegisterDto): ResponseEntity<String> {
         // persisting the user
       try {
           val user = User()
@@ -33,7 +33,7 @@ class UserController (private val userService : UserServiceImpl) {
           user.walletAddress = body.walletAddress
 
           userService.createUser(user)
-      }catch (e :Exception){
+      } catch (e :Exception){
           return  ResponseEntity.badRequest().body("user could not be registered: ${e.message}")
       }
         return ResponseEntity.ok("User was registered")
