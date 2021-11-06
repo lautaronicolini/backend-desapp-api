@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoK.backenddesappapi.app.services
 
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.CryptoActive
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.Price
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.PriceDTO
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
@@ -35,21 +36,12 @@ open class CryptoActivePricesService {
     }
 
     fun GetUSDARSExchange():Float{
-        val url = "https://api.estadisticasbcra.com/usd_of"
-        val headers = HttpHeaders()
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON))
-        headers.setContentType(MediaType.APPLICATION_JSON)
-        headers.set("Authorization", "BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjQ5MTYwNDgsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJsYXV0YXJvbm5pY29saW5pQGdtYWlsLmNvbSJ9.XnRFzJBbGU2vZTzgkokhPPQTL2fQxwcLy2Cui3QAcH09B-YIcbEh5Vi1oX0Zu5OGw-1w-eOH0OkU61leqrFsUQ")
-        val entity = HttpEntity("parameters", headers)
+        val url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 
         val restTemplate:RestTemplate = RestTemplate()
-        val response = restTemplate.exchange(url, HttpMethod.GET, entity, Array<Price>::class.java)
-        val result:Price? = response.body?.last()
-        if(result?.v == null){
-            throw Exception()
-        }else{
-            return result?.v?.toFloat()
-        }
+        val response = restTemplate.exchange(url, HttpMethod.GET, null, Array<PriceDTO>::class.java)
+        val result:Price = response.body!!.first()!!.casa!!
+        return result.compra.replace(',','.').toFloat()
     }
 
     @Async

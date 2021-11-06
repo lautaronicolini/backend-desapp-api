@@ -8,6 +8,4 @@ class RegisterDto {
     var password :String = ""
     var cvu :String =""
     var walletAddress :String =""
-
-
 }
