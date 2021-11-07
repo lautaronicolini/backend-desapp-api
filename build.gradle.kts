@@ -21,6 +21,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("junit:junit:4.13.1")
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	implementation ("org.springframework.boot:spring-boot-starter-security")
+	implementation ("org.springframework.security:spring-security-test")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation ("org.mockito:mockito-core:2.19.0")
 	testImplementation ("io.mockk:mockk:1.9.3")

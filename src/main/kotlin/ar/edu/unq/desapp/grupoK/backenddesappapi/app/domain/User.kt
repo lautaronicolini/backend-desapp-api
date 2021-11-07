@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import kotlinx.serialization.Serializable
 import org.jetbrains.annotations.NotNull
 import javax.persistence.*
@@ -30,6 +31,7 @@ import javax.persistence.*
    var email: String = "";
 
    @NotNull
+   @JsonIgnore
    //@NotBlank(message = "Password is mandatory")
    var password: String = "";
 
