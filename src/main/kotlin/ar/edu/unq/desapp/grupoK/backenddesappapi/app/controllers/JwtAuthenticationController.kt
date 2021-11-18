@@ -12,9 +12,8 @@ import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.*
 
-
+@CrossOrigin(origins = ["http://localhost:3000"])  //enables CORS for this controller. It allows requests from a diff origin
 @RestController
-@CrossOrigin
 class JwtAuthenticationController {
 
     @Autowired
@@ -26,6 +25,7 @@ class JwtAuthenticationController {
     @Autowired
     private val userDetailsService: JwtUserDetailsService? = null
 
+    @CrossOrigin
     @RequestMapping(value = ["/authenticate"], method = [RequestMethod.POST])
     @Throws(java.lang.Exception::class)
     fun createAuthenticationToken(@RequestBody authenticationRequest: JwtRequest): ResponseEntity<*>? {

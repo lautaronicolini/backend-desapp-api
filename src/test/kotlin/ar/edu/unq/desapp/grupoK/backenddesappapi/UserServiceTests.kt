@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi
 
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.controllers.UserController
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDto
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.errors.UserAlreadyExistException
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.repositories.UserRepository
@@ -9,16 +7,12 @@ import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserService
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import io.mockk.impl.annotations.MockK
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue
-import org.junit.internal.runners.statements.ExpectException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
-import org.mockito.ArgumentMatcher
-import org.mockito.ArgumentMatchers
 
 @SpringBootTest
 class UserServiceTests {

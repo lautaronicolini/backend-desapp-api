@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.services
 
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDto
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.errors.UserAlreadyExistException
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.repositories.UserRepository

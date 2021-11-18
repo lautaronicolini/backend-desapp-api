@@ -19,7 +19,7 @@ import javax.xml.bind.DatatypeConverter
 @Component
 class JwtTokenUtil : Serializable {
     @Value("")
-    private val secret: String? = null
+    private val secret: ByteArray = "123456".toByteArray()
     fun getUsernameFromToken(token: String?): String {
         return getClaimFromToken(token) { obj: Claims -> obj.subject }
     }
@@ -42,7 +42,7 @@ class JwtTokenUtil : Serializable {
     }
 
     private fun getAllClaimsFromToken(token: String?): Claims {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).body
+        return Jwts.parser().setSigningKey("123456".toByteArray()).parseClaimsJws(token).body
     }
 
     private fun isTokenExpired(token: String): Boolean {

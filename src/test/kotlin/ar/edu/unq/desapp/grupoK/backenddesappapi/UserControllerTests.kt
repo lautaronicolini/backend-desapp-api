@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi
 
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.controllers.UserController
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDto
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDTO
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.errors.UserAlreadyExistException
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserService
@@ -23,7 +23,7 @@ class UserControllerTests {
     var userService = mockk<UserService>()
 
     @MockK
-    var mockUserDto = mockk<RegisterDto>()
+    var mockUserDto = mockk<RegisterDTO>()
 
     @InjectMockKs
     var userController = UserController(userService)

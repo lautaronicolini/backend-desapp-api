@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto
 
-class RegisterDto {
+class RegisterDTO {
     var name :String = ""
     var lastName :String= ""
     var address :String= ""
