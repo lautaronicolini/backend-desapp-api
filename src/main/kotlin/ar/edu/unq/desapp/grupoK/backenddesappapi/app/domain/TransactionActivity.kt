@@ -16,11 +16,11 @@ import javax.persistence.*
 
         var time: String = getTimeInHours();
 
-        var currency: Long = 0L;
+        var currency: String = "";
 
-        var amountPesos: Long = 0L; //in Argentine pesos
+        var amountPesos: Double = 0.0; //in Argentine pesos
 
-        var currencyValue: Long = 0L;
+        var currencyValue: Double = 0.0;
 
          var userName: String = ""
 
@@ -29,11 +29,11 @@ import javax.persistence.*
          var transactions: Int = 0
 
 
-        fun TransactionActivity(currency: Long, amountPesos: Long, currencyValue: Long, userName:String,userLastName:String, reputation:Int, transactions:Int){
+        fun TransactionActivity(currency: String, amountPesos: Double, currencyValue: Double, userName:String,userLastName:String, reputation:Int, transactions:Int){
             this.currency = currency;
             this.amountPesos = amountPesos;
             this.currencyValue = currencyValue;
-            this.userName = userName + userLastName;
+            this.userName = "$userName $userLastName";
             this.reputation = reputation;
             this.transactions = transactions;
         }

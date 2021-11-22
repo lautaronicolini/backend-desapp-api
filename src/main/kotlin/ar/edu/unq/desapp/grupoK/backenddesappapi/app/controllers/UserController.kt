@@ -24,7 +24,7 @@ val authController : JwtAuthenticationController? = null
         return ResponseEntity("Hello World!", HttpStatus.OK)
     }
 
-    @CrossOrigin                //TODO this thing
+    @CrossOrigin
     @PostMapping("/login")
     fun login( @RequestBody body: JwtRequest): ResponseEntity<String>? {
         var response :JwtResponse  = JwtResponse(authController!!.createAuthenticationToken(body).toString())
