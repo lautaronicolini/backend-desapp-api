@@ -18,6 +18,5 @@ class WebConfig : WebMvcConfigurer{
                 .allowedOrigins("*")
                 .allowedHeaders("*")
         }
-
     }
 }
