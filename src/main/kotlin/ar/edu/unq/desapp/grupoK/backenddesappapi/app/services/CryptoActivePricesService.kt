@@ -6,19 +6,23 @@ import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.PriceDTO
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.core.io.ClassPathResource
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.scheduling.annotation.Async
+import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import java.nio.file.Files
 import java.util.*
 
+@Service
+ class CryptoActivePricesService {
 
-open class CryptoActivePricesService {
+    @Cacheable(value = ["cryptoactives"])
     fun GetAllCryptoActivePrices(): List<CryptoActive>{
         var result = mutableListOf<CryptoActive>()
         var cryptoActivesFile = ClassPathResource("CryptoActives.json").file
@@ -35,6 +39,7 @@ open class CryptoActivePricesService {
         return result
     }
 
+    @Cacheable(value = ["ars"])
     fun GetUSDARSExchange():Float{
         val url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 
@@ -44,8 +49,8 @@ open class CryptoActivePricesService {
         return result.compra.replace(',','.').toFloat()
     }
 
-    @Async
-    open fun GetUSDPriceForCrypto(crypto:String):CryptoActive{
+    @Cacheable(value = ["usd"])
+     fun GetUSDPriceForCrypto(crypto:String):CryptoActive{
         val restTemplate:RestTemplate = RestTemplate()
         val result = restTemplate.getForObject<CryptoActive>("https://api1.binance.com/api/v3/ticker/price?symbol=$crypto")
         return result

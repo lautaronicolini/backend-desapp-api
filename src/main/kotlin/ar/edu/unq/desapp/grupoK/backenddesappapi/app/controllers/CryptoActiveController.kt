@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 
 @CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
+@RequestMapping("cryptoActives")
 class CryptoActiveController {
     @CrossOrigin
     @RequestMapping("/crypto/prices")

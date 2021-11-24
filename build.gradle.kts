@@ -35,6 +35,14 @@ dependencies {
 	implementation("com.github.jkcclemens:khttp:0.1.0")
 	implementation("io.springfox:springfox-swagger2:2.7.0")
 	implementation("io.springfox:springfox-swagger-ui:2.7.0")
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis:2.5.4")
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache
+	implementation("org.springframework.boot:spring-boot-starter-cache:2.5.4")
+
+
+
 }
 
 tasks.withType<KotlinCompile> {
