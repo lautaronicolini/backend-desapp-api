@@ -1,14 +1,21 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.controllers
 
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDTO
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.config.JwtTokenUtil
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.controllers.JwtAuthenticationController
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.security.JwtRequest
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.security.JwtResponse
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.JwtUserDetailsService
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.DisabledException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 
@@ -18,7 +25,14 @@ import org.springframework.web.client.RestTemplate
 @RequestMapping("api")
 
 class UserController (private val userService : UserService) {
-val authController : JwtAuthenticationController? = null
+    @Autowired
+    private val jwtTokenUtil: JwtTokenUtil? = null
+    @Autowired
+    private val userDetailsService: JwtUserDetailsService? = null
+    @Autowired
+    private val authenticationManager: AuthenticationManager? = null
+    val authController : JwtAuthenticationController? = null
+
     @GetMapping("/hello")
     open fun hello(): ResponseEntity<String?>? {
         return ResponseEntity("Hello World!", HttpStatus.OK)
@@ -27,12 +41,14 @@ val authController : JwtAuthenticationController? = null
     @CrossOrigin
     @PostMapping("/login")
     fun login( @RequestBody body: JwtRequest): ResponseEntity<String>? {
-        var response :JwtResponse  = JwtResponse(authController!!.createAuthenticationToken(body).toString())
-
-return null
+        authenticate(body.getUsername(), body.getPassword())
+        val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())
+        val token = jwtTokenUtil!!.generateToken(userDetails)
+        return ResponseEntity.ok(JwtResponse(token).toString())
+        //var response :JwtResponse  = JwtResponse(authController!!.createAuthenticationToken(body).toString())
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/register")
     fun registerUser( @RequestBody body: RegisterDTO): ResponseEntity<String> {
         // persisting the user
@@ -58,5 +74,14 @@ return null
         return userService.getAllUsers()
     }
 
-
+    @Throws(Exception::class)
+    fun authenticate(username: String, password: String) {
+        try {
+            authenticationManager!!.authenticate(UsernamePasswordAuthenticationToken(username, password))
+        } catch (e: DisabledException) {
+            throw Exception("USER_DISABLED", e)
+        } catch (e: BadCredentialsException) {
+            throw Exception("INVALID_CREDENTIALS", e)
+        }
+    }
 }

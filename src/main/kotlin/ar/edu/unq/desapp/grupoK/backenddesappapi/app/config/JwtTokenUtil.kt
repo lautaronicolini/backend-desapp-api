@@ -42,7 +42,7 @@ class JwtTokenUtil : Serializable {
     }
 
     private fun getAllClaimsFromToken(token: String?): Claims {
-        return Jwts.parser().setSigningKey("123456".toByteArray()).parseClaimsJws(token).body
+        return Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).body
     }
 
     private fun isTokenExpired(token: String): Boolean {

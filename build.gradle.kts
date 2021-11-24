@@ -6,7 +6,6 @@ plugins {
 	kotlin("jvm") version "1.5.21"
 	kotlin("plugin.spring") version "1.5.21"
 	kotlin("plugin.serialization") version "1.5.21"
-
 }
 
 group = "ar.edu.unq.desapp.grupoK"
@@ -34,6 +33,8 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 	implementation("com.github.jkcclemens:khttp:0.1.0")
+	implementation("io.springfox:springfox-swagger2:2.7.0")
+	implementation("io.springfox:springfox-swagger-ui:2.7.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -53,4 +54,3 @@ repositories {
 		url = uri("https://jitpack.io")
 	}
 }
-
