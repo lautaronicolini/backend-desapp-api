@@ -56,7 +56,18 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() { //This class enables 
     @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity.cors().and().csrf().disable() // dont authenticate this particular request
-            .authorizeRequests().antMatchers("/authenticate", "/api/register", "/register", "/login", "/api/login")
+            .authorizeRequests().antMatchers(
+                        "/authenticate",
+                        "/api/register",
+                        "/register",
+                        "/login",
+                        "/api/login",
+                        "/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**")
             .permitAll().anyRequest() // all other requests need to be authenticated
             .authenticated().and().exceptionHandling() // make sure we use stateless session; session won't be used to
         // store user's state.
