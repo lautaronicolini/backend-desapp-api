@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.controllers
 
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.CreateTransactionDTO
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.TransactionDetailsDTO
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.TransactionService
 import org.springframework.http.HttpStatus
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class TransactionController(private val transactionService: TransactionService) {
     @CrossOrigin
-    @PostMapping("/transaction/details")
-    fun getTransactionDetails(@RequestBody body:TransactionDetailsDTO): ResponseEntity<Any>{
-        //return ResponseEntity(transactionService.GetTransactionWithId(id), HttpStatus.OK)
-        var dtoResponse = TransactionDetailsDTO("10/15/2021 14:45:00", "ATOMUSDT", "100", "", "3741.521", "Jorge", "Perez", "50")
+    @RequestMapping("/transaction/details")
+    fun GetTransactionDetails(id: Long): ResponseEntity<TransactionDetailsDTO>{
+        return ResponseEntity(transactionService.GetTransactionDetailsDTOForId(id), HttpStatus.OK)
+    }
 
-        transactionService.CreateTransaction()
-
-        return ResponseEntity(dtoResponse, HttpStatus.OK)
+    @CrossOrigin
+    @RequestMapping("/transaction/create")
+    fun CreateTransaction(@RequestBody dto:CreateTransactionDTO): ResponseEntity<HttpStatus>{
+        transactionService.CreateTransaction(dto)
+        return ResponseEntity(HttpStatus.CREATED)
     }
 }
