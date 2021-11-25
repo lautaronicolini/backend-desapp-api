@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain
 
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.CreateTransactionDTO
 import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -8,41 +9,34 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-    class TransactionActivity {
-
+    class TransactionActivity() {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id : Int = 0;
+        val id : Long = 0
+        var time: String = ""
+        var crypto: String = ""
+        var operationType: OperationType = OperationType.NONE
+        var nominalAmount: String = ""
+        var unitPriceARS: String = ""
+        var buyerEmail: String? = null
+        var sellerEmail: String? = null
 
-        var time: String = getTimeInHours();
-
-        var currency: Long = 0L;
-
-        var amountPesos: Long = 0L; //in Argentine pesos
-
-        var currencyValue: Long = 0L;
-
-         var userName: String = ""
-
-         var reputation: Int = 0
-
-         var transactions: Int = 0
-
-
-        fun TransactionActivity(currency: Long, amountPesos: Long, currencyValue: Long, userName:String,userLastName:String, reputation:Int, transactions:Int){
-            this.currency = currency;
-            this.amountPesos = amountPesos;
-            this.currencyValue = currencyValue;
-            this.userName = userName + userLastName;
-            this.reputation = reputation;
-            this.transactions = transactions;
+        constructor(dto:CreateTransactionDTO):this(){
+            this.time = getTimeInHours()
+            this.crypto = dto.crypto
+            this.operationType = dto.operationType
+            this.nominalAmount = dto.nominalAmount
+            this.unitPriceARS = dto.unitPriceARS
+            if (operationType == OperationType.BUY) {
+                this.buyerEmail = dto.creatorUser
+            } else {
+                this.sellerEmail = dto.creatorUser
+            }
         }
-
 
         @JvmName("getTime1")
         fun getTimeInHours(): String {
             val currentDateTime = LocalDateTime.now()
             return currentDateTime.format(DateTimeFormatter.ofPattern("HH"))
         }
-
     }

@@ -44,7 +44,7 @@ class UserController (private val userService : UserService) {
         authenticate(body.getUsername(), body.getPassword())
         val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())
         val token = jwtTokenUtil!!.generateToken(userDetails)
-        return ResponseEntity.ok(JwtResponse(token).toString())
+        return ResponseEntity.ok(token)
         //var response :JwtResponse  = JwtResponse(authController!!.createAuthenticationToken(body).toString())
     }
 

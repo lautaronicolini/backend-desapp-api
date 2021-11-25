@@ -67,7 +67,10 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() { //This class enables 
                         "/swagger-resources/**",
                         "/configuration/security",
                         "/swagger-ui.html",
-                        "/webjars/**")
+                        "/webjars/**",
+                        "/crypto/prices",
+                        "/transaction/**",
+                        "/console/**")
             .permitAll().anyRequest() // all other requests need to be authenticated
             .authenticated().and().exceptionHandling() // make sure we use stateless session; session won't be used to
         // store user's state.
@@ -77,7 +80,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() { //This class enables 
             .invalidateHttpSession(true).clearAuthentication(true)
             .logoutRequestMatcher(AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
             .permitAll()
-
+            http.csrf().disable()
+            http.headers().frameOptions().disable()
 
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
