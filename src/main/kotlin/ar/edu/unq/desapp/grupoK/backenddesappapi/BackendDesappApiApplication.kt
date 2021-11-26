@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableAsync
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableCaching
-class BackendDesappApiApplication
+class BackendDesappApiApplication{}
 
 fun main(args: Array<String>) {
 	runApplication<BackendDesappApiApplication>(*args)

@@ -68,8 +68,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() { //This class enables 
                         "/configuration/security",
                         "/swagger-ui.html",
                         "/webjars/**",
-                        "/crypto/prices",
-                        "/transaction/**",
                         "/console/**")
             .permitAll().anyRequest() // all other requests need to be authenticated
             .authenticated().and().exceptionHandling() // make sure we use stateless session; session won't be used to
