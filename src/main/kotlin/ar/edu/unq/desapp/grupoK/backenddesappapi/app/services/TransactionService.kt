@@ -18,10 +18,9 @@ class TransactionService {
     @Autowired
     private var userService: UserService? = null
 
-    fun CreateTransaction(dto:CreateTransactionDTO): Boolean {
+    fun CreateTransaction(dto:CreateTransactionDTO): Int {
         var entity = TransactionActivity(dto)
-        transactionRepo!!.save(entity)
-        return true
+        return  transactionRepo!!.save(entity).id
     }
 
     fun GetTransactionWithId(id:Long):TransactionActivity {

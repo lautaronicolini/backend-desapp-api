@@ -12,7 +12,7 @@ import javax.persistence.*
     class TransactionActivity() {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id : Long = 0
+        val id : Int = 0
         var time: String = ""
         var crypto: String = ""
         var operationType: OperationType = OperationType.NONE
