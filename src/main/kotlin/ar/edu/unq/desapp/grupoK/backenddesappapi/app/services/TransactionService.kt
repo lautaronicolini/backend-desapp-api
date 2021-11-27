@@ -39,4 +39,17 @@ class TransactionService {
         var creatorUser = userService!!.findUsersByEmail(creatorEmail)[0]
         return TransactionDetailsDTO(entity.time, entity.crypto, entity.nominalAmount, entity.unitPriceARS, price.toString(), creatorUser.name, creatorUser.lastName, creatorUser.reputation.toString())
     }
+
+    fun GetAllTransactions():List<TransactionActivity>{
+        return transactionRepo!!.findAll().toList()
+    }
+
+    fun ApplyToTransaction(id: Long, userEmail: String){
+        var entity = GetTransactionWithId(id)
+        if (entity.operationType == OperationType.BUY) {
+            entity.sellerEmail = userEmail
+        } else {
+            entity.buyerEmail = userEmail
+        }
+    }
 }
