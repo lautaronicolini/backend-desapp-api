@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.services
 
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.OperationType
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.State
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.TransactionActivity
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.CreateTransactionDTO
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.TransactionDetailsDTO
@@ -52,5 +53,7 @@ class TransactionService {
         } else {
             entity.buyerEmail = userEmail
         }
+        entity.state = State.APPLIED
+        transactionRepo!!.save(entity)
     }
 }

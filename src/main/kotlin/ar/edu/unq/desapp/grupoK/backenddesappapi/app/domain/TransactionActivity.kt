@@ -20,6 +20,7 @@ import javax.persistence.*
         var unitPriceARS: String = ""
         var buyerEmail: String? = null
         var sellerEmail: String? = null
+        var state: State = State.NEW
 
         constructor(dto:CreateTransactionDTO):this(){
             this.time = getTimeInHours()
@@ -37,6 +38,6 @@ import javax.persistence.*
         @JvmName("getTime1")
         fun getTimeInHours(): String {
             val currentDateTime = LocalDateTime.now()
-            return currentDateTime.format(DateTimeFormatter.ofPattern("HH"))
+            return currentDateTime.format(DateTimeFormatter.ofPattern("DD:MM:YYYY HH:mm:SS"))
         }
     }
