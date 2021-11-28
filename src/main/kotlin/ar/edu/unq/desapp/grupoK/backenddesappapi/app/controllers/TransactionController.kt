@@ -26,7 +26,7 @@ class TransactionController(private val transactionService: TransactionService) 
     @CrossOrigin
     @RequestMapping("/transaction/all")
     fun GetAllTransactions(): ResponseEntity<List<TransactionActivity>>{
-        return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.FOUND)
+        return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.OK)
     }
 
     @CrossOrigin

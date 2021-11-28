@@ -38,6 +38,6 @@ import javax.persistence.*
         @JvmName("getTime1")
         fun getTimeInHours(): String {
             val currentDateTime = LocalDateTime.now()
-            return currentDateTime.format(DateTimeFormatter.ofPattern("DD:MM:YYYY HH:mm:SS"))
+            return currentDateTime.format(DateTimeFormatter.ofPattern("DD/MM/YYYY HH:mm:SS"))
         }
     }

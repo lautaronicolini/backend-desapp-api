@@ -25,8 +25,8 @@ class TransactionService {
     }
 
     fun GetTransactionWithId(id:Long):TransactionActivity {
-        if (transactionRepo!!.existsById(id)) {
-            return transactionRepo!!.findById(id).get()
+        if (transactionRepo!!.existsById(id.toInt())) {
+            return transactionRepo!!.findById(id.toInt()).get()
        }
         else {
             throw Exception("Element with id: $id not found")
@@ -38,7 +38,7 @@ class TransactionService {
         var price = entity.nominalAmount.toBigDecimal() * entity.unitPriceARS.toBigDecimal()
         var creatorEmail = if (entity.operationType == OperationType.BUY) entity.buyerEmail!! else entity.sellerEmail!!
         var creatorUser = userService!!.findUsersByEmail(creatorEmail)[0]
-        return TransactionDetailsDTO(entity.time, entity.crypto, entity.nominalAmount, entity.unitPriceARS, price.toString(), creatorUser.name, creatorUser.lastName, creatorUser.reputation.toString())
+        return TransactionDetailsDTO(entity.id,entity.time, entity.crypto, entity.nominalAmount, entity.unitPriceARS, price.toString(), creatorUser.name, creatorUser.lastName, creatorUser.reputation.toString(),entity.operationType.toString())
     }
 
     fun GetAllTransactions():List<TransactionActivity>{

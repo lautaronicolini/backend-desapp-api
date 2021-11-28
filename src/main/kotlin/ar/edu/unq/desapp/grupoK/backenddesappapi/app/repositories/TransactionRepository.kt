@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface TransactionRepository: CrudRepository<TransactionActivity, Long> {
+interface TransactionRepository: CrudRepository<TransactionActivity, Int> {
 
 }
