@@ -45,14 +45,20 @@ class TransactionService {
         return transactionRepo!!.findAll().toList()
     }
 
-    fun ApplyToTransaction(id: Long, userEmail: String){
+    fun ApplyToTransaction(id: Long, userEmail: String): String {
         var entity = GetTransactionWithId(id)
         if (entity.operationType == OperationType.BUY) {
             entity.sellerEmail = userEmail
+            entity.state = State.APPLIED
+            transactionRepo!!.save(entity)
+            return userService!!.findUsersByEmail(entity.buyerEmail!!)[0].walletAddress
         } else {
             entity.buyerEmail = userEmail
+            entity.state = State.APPLIED
+            transactionRepo!!.save(entity)
+            return userService!!.findUsersByEmail(entity.sellerEmail!!)[0].cvu
+
         }
-        entity.state = State.APPLIED
-        transactionRepo!!.save(entity)
+
     }
 }
