@@ -1,27 +1,36 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.controllers
 
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.TokenJWT
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDto
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.controllers.AuthController
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.api.dto.RegisterDTO
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.config.JwtTokenUtil
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.controllers.JwtAuthenticationController
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.LoginDto
-import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.jwt.JwtRequest
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.security.JwtRequest
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.security.JwtResponse
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.JwtUserDetailsService
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.UserService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.DisabledException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletResponse
+import org.springframework.web.client.RestTemplate
+
 
 @CrossOrigin(origins = ["http://localhost:3000"])  //enables CORS for this controller. It allows requests from a diff origin
 @RestController
-@RequestMapping("api")
-class UserController (private val userService : UserService) {
 
-    //val back CriptoP2P = getCriptoP2P();
-    //val  userCont =  UserController();
-    //val jwt = TokenJWT();
-    val jwtAuth = AuthController()
+class UserController (private val userService : UserService) {
+    @Autowired
+    private val jwtTokenUtil: JwtTokenUtil? = null
+    @Autowired
+    private val userDetailsService: JwtUserDetailsService? = null
+    @Autowired
+    private val authenticationManager: AuthenticationManager? = null
+    val authController : JwtAuthenticationController? = null
 
     @GetMapping("/hello")
     open fun hello(): ResponseEntity<String?>? {
@@ -29,12 +38,21 @@ class UserController (private val userService : UserService) {
     }
 
     @CrossOrigin
+    @GetMapping("/login")
+    fun login(@RequestBody body: JwtRequest): ResponseEntity<String>? {
+        authenticate(body.getUsername(), body.getPassword())
+        val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())
+        val token = jwtTokenUtil!!.generateToken(userDetails)
+        return ResponseEntity.ok(token)
+        //var response :JwtResponse  = JwtResponse(authController!!.createAuthenticationToken(body).toString())
+    }
+
+    @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/register")
-    fun registerUser( @RequestBody body: RegisterDto): ResponseEntity<String> {
+    fun registerUser( @RequestBody body: RegisterDTO): ResponseEntity<String> {
         // persisting the user
-        var userJSON : String;
-        try {
-            val user = User()
+      try {
+          val user = User()
           user.name = body.name
           user.lastName = body.lastName
           user.address = body.address
@@ -43,59 +61,26 @@ class UserController (private val userService : UserService) {
           user.cvu = body.cvu
           user.walletAddress = body.walletAddress
 
-          userJSON = userService.createUser(user)
-      }catch (e :Exception){
+          userService.createUser(user)
+      } catch (e :Exception){
           return  ResponseEntity.badRequest().body("user could not be registered: ${e.message}")
       }
-        return ResponseEntity.ok(userJSON)
+        return ResponseEntity.ok("User was registered")
     }
 
-    @PostMapping("/login")
-    fun login( @RequestBody body: LoginDto, response : HttpServletResponse): ResponseEntity<Any> {
-        val user = userService.getUser(body.email)
-        return if (user!=null){
-            if(user.password !=body.password) {
-                ResponseEntity.badRequest().body("Incorrect password")
-            }
-            else{
-                //val token = jwt.generateToken(user)
-                //val cookie = Cookie("jwt",token)
-                //cookie.isHttpOnly=true // to assure the frontend cannot access the cookie
-                //response.addCookie(cookie
-                val autReq = JwtRequest(user.email, user.password)
-                jwtAuth.createAuthenticationToken(autReq)
-                ResponseEntity.ok("success")
-            }
-        } else{
-            ResponseEntity.badRequest().body("Cannot find user")
+    @GetMapping("/users")
+    fun getAllUsers(): MutableIterable<User> {
+        return userService.getAllUsers()
+    }
+
+    @Throws(Exception::class)
+    fun authenticate(username: String, password: String) {
+        try {
+            authenticationManager!!.authenticate(UsernamePasswordAuthenticationToken(username, password))
+        } catch (e: DisabledException) {
+            throw Exception("USER_DISABLED", e)
+        } catch (e: BadCredentialsException) {
+            throw Exception("INVALID_CREDENTIALS", e)
         }
     }
-
-
-
-
-
-
-
-
-   /* @PostMapping("/login")
-    fun login( @RequestBody body: LoginDto, response : HttpServletResponse): ResponseEntity<Any> {
-        val user = userService.getUser(body.email)
-        return if (user!=null){
-            if(user.password !=body.password) {
-                ResponseEntity.badRequest().body("Incorrect password")
-            }
-            else{
-                //val token = jwt.generateToken(user)
-                //val cookie = Cookie("jwt",token)
-                //cookie.isHttpOnly=true // to assure the frontend cannot access the cookie
-                //response.addCookie(cookie)
-
-                ResponseEntity.ok("success")
-            }
-        } else{
-            ResponseEntity.badRequest().body("Cannot find user")
-        }
-    }
-*/
 }

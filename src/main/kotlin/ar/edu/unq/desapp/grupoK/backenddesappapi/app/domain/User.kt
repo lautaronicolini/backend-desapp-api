@@ -1,54 +1,51 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import kotlinx.serialization.Serializable
 import org.jetbrains.annotations.NotNull
-import org.springframework.stereotype.Component
 import javax.persistence.*
 
 @Serializable //this class can be converted to JSON
-@Component
+@Entity
 @Table(name = "User")
  class User {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "user_id")
+  // @Column(name = "user_id")
    val id : Int = 0;
 
    @NotNull
-  // @Column(name ="name")
    // @NotBlank(message = "Name is mandatory")
    var name: String = "";
 
    @NotNull
-   @Column(name ="lastName")
    // @NotBlank(message = "Last Name is mandatory")
    var lastName: String = "";
 
    @NotNull
-   @Column(name ="address")
    //@NotBlank(message = "Address is mandatory")
    var address: String = "";
 
    @NotNull
-   @Column(name ="email")
    //@NotBlank(message = "Email is mandatory")
    var email: String = "";
 
    @NotNull
-   @Column(name ="password")
+   @JsonIgnore
    //@NotBlank(message = "Password is mandatory")
    var password: String = "";
 
    @NotNull
-   @Column(name ="CVU")
    //@NotBlank(CVU = "Name is mandatory")
    var cvu: String = "";
 
    @NotNull
-   @Column(name ="walletAddress")
    //@NotBlank(message = "Wallet Address is mandatory")
    var walletAddress: String = ""
 
+   @NotNull
+   var reputation: Int = 0
 
-
+  @NotNull
+  var transactions: Int = 0
 }
