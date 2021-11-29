@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.controllers
 
+import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.State
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.TransactionActivity
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.CreateTransactionDTO
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.TransactionDetailsDTO

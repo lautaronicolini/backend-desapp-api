@@ -19,12 +19,12 @@ import java.util.*
 class SwaggerUIConfig {
     @Bean
     open fun api() : Docket = Docket(DocumentationType.SWAGGER_2)
-            .securityContexts(Arrays.asList(securityContext()))
-            .securitySchemes(Arrays.asList(apiKey()))
-            .select()
-            .apis(RequestHandlerSelectors.any())
-            .paths(PathSelectors.any())
-            .build()
+        .securityContexts(Arrays.asList(securityContext()))
+        .securitySchemes(Arrays.asList(apiKey()))
+        .select()
+        .apis(RequestHandlerSelectors.any())
+        .paths(PathSelectors.any())
+        .build()
 
     private fun securityContext(): SecurityContext? {
         return SecurityContext.builder().securityReferences(defaultAuth()).build()

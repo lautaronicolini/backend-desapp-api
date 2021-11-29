@@ -57,29 +57,31 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() { //This class enables 
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity.cors().and().csrf().disable() // dont authenticate this particular request
             .authorizeRequests().antMatchers(
-                        "/authenticate",
-                        "/api/register",
-                        "/register",
-                        "/login",
-                        "/api/login",
-                        "/v2/api-docs",
-                        "/configuration/ui",
-                        "/swagger-resources/**",
-                        "/configuration/security",
-                        "/swagger-ui.html",
-                        "/webjars/**",
-                        "/console/**")
+                "/authenticate",
+                "/api/register",
+                "/register",
+                "/login",
+                "/api/login",
+                "/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "/crypto/prices",
+                "/transaction/**",
+                "/console/**")
             .permitAll().anyRequest() // all other requests need to be authenticated
             .authenticated().and().exceptionHandling() // make sure we use stateless session; session won't be used to
-        // store user's state.
+            // store user's state.
             .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().formLogin().loginPage("/login").permitAll().and().logout()
             .invalidateHttpSession(true).clearAuthentication(true)
             .logoutRequestMatcher(AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
             .permitAll()
-            http.csrf().disable()
-            http.headers().frameOptions().disable()
+        http.csrf().disable()
+        http.headers().frameOptions().disable()
 
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)

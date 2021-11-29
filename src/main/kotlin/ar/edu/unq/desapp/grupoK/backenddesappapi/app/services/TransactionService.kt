@@ -51,16 +51,18 @@ class TransactionService {
 
     fun ApplyToTransaction(id: Long, userEmail: String): String {
         var entity = GetTransactionWithId(id)
+        var result = ""
         if (entity.buyerEmail != userEmail && entity.sellerEmail != userEmail) {
             if (entity.operationType == OperationType.BUY) {
                 entity.sellerEmail = userEmail
-                return userService!!.findUsersByEmail(entity.buyerEmail!!)[0].walletAddress
+                result = userService!!.findUsersByEmail(entity.buyerEmail!!)[0].walletAddress
             } else {
                 entity.buyerEmail = userEmail
-                return userService!!.findUsersByEmail(entity.sellerEmail!!)[0].cvu
+                result = userService!!.findUsersByEmail(entity.sellerEmail!!)[0].cvu
             }
             entity.stateHistory.AddState(State.APPLIED)
             transactionRepo!!.save(entity)
+            return result
         } else {
             throw Exception("Applying user cannot be same user as creator user")
         }
