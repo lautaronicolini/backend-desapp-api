@@ -15,13 +15,11 @@ import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.User as DomUser
 @Service
 class JwtUserDetailsService : UserDetailsService {
     @Autowired
-    private var userRepository: UserRepository? = null
-
-
+    private var userService:UserService? = null
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(email: String): UserDetails {
-        val user: DomUser? = userRepository!!.findByEmail(email)
+        val user: DomUser? = userService!!.findUsersByEmail(email)[0]
         if (user == null) {
             throw UsernameNotFoundException("User not found with email: $email");
         }

@@ -53,7 +53,17 @@ class TransactionService {
         } else {
             entity.buyerEmail = userEmail
         }
-        entity.state = State.APPLIED
+        entity.stateHistory.AddState(State.APPLIED)
         transactionRepo!!.save(entity)
+    }
+
+    fun ChangeTransactionState(id: Long, newState: State)
+    {
+        var entity = GetTransactionWithId(id)
+        entity.stateHistory.AddState(newState)
+        transactionRepo!!.save(entity)
+        if (newState == State.CLOSED) {
+            userService!!.UpdateUsersFromCompletedTransaction(entity)
+        }
     }
 }

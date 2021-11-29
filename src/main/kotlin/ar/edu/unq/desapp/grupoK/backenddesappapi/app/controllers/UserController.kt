@@ -22,8 +22,6 @@ import org.springframework.web.client.RestTemplate
 
 @CrossOrigin(origins = ["http://localhost:3000"])  //enables CORS for this controller. It allows requests from a diff origin
 @RestController
-@RequestMapping("api")
-
 class UserController (private val userService : UserService) {
     @Autowired
     private val jwtTokenUtil: JwtTokenUtil? = null
@@ -38,9 +36,9 @@ class UserController (private val userService : UserService) {
         return ResponseEntity("Hello World!", HttpStatus.OK)
     }
 
-    @CrossOrigin                //TODO this thing
+    @CrossOrigin
     @PostMapping("/login")
-    fun login( @RequestBody body: JwtRequest): ResponseEntity<String>? {
+    fun login(@RequestBody body: JwtRequest): ResponseEntity<String>? {
         authenticate(body.getUsername(), body.getPassword())
         val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())
         val token = jwtTokenUtil!!.generateToken(userDetails)

@@ -20,7 +20,8 @@ import javax.persistence.*
         var unitPriceARS: String = ""
         var buyerEmail: String? = null
         var sellerEmail: String? = null
-        var state: State = State.NEW
+        @OneToOne
+        var stateHistory: StateHistory = StateHistory()
 
         constructor(dto:CreateTransactionDTO):this(){
             this.time = getTimeInHours()
