@@ -10,7 +10,10 @@ class TransactionDetailsDTO(
     userName: String,
     userSurname: String,
     userReputation: String,
-    operationType: String
+    sellerEmail:String,
+    buyerEmail:String,
+    operationType: String,
+
 ) {
     var transactionId = transactionId
     var time = time
@@ -21,5 +24,7 @@ class TransactionDetailsDTO(
     var userName = userName
     var userSurname = userSurname
     var userReputation = userReputation
+    var sellerEmail = sellerEmail
+    var buyerEmail = buyerEmail
     var operationType = operationType
 }

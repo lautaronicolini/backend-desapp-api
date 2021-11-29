@@ -14,7 +14,8 @@ class TransactionController(private val transactionService: TransactionService) 
     @CrossOrigin
     @RequestMapping("/transaction/details")
     fun GetTransactionDetails(id: Long): ResponseEntity<TransactionDetailsDTO>{
-        return ResponseEntity(transactionService.GetTransactionDetailsDTOForId(id), HttpStatus.OK)
+        var transaction =transactionService.GetTransactionDetailsDTOForId(id)
+        return ResponseEntity(transaction, HttpStatus.OK)
     }
 
     @CrossOrigin
@@ -26,7 +27,8 @@ class TransactionController(private val transactionService: TransactionService) 
     @CrossOrigin
     @RequestMapping("/transaction/all")
     fun GetAllTransactions(): ResponseEntity<List<TransactionActivity>>{
-        return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.OK)
+        var transactions  =transactionService.GetAllTransactions()
+        return ResponseEntity(transactions, HttpStatus.OK)
     }
 
     @CrossOrigin

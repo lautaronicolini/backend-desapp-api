@@ -38,7 +38,11 @@ class TransactionService {
         var price = entity.nominalAmount.toBigDecimal() * entity.unitPriceARS.toBigDecimal()
         var creatorEmail = if (entity.operationType == OperationType.BUY) entity.buyerEmail!! else entity.sellerEmail!!
         var creatorUser = userService!!.findUsersByEmail(creatorEmail)[0]
-        return TransactionDetailsDTO(entity.id,entity.time, entity.crypto, entity.nominalAmount, entity.unitPriceARS, price.toString(), creatorUser.name, creatorUser.lastName, creatorUser.reputation.toString(),entity.operationType.toString())
+        var buyerEmail = if(entity.buyerEmail==null){""} else entity.buyerEmail!!
+        var sellerEmail = if(entity.sellerEmail==null){""} else entity.sellerEmail!!
+
+        return TransactionDetailsDTO(entity.id,entity.time, entity.crypto, entity.nominalAmount, entity.unitPriceARS, price.toString(), creatorUser.name,
+            creatorUser.lastName, creatorUser.reputation.toString(),sellerEmail,buyerEmail, entity.operationType.toString())
     }
 
     fun GetAllTransactions():List<TransactionActivity>{
