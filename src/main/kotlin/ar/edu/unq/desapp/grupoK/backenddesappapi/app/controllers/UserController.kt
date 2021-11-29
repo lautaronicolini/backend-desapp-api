@@ -33,13 +33,13 @@ class UserController (private val userService : UserService) {
     val authController : JwtAuthenticationController? = null
 
     @GetMapping("/hello")
-     fun hello(): ResponseEntity<String?>? {
+    open fun hello(): ResponseEntity<String?>? {
         return ResponseEntity("Hello World!", HttpStatus.OK)
     }
 
     @CrossOrigin
-    @PostMapping("/login")
-    fun login( @RequestBody body: JwtRequest): ResponseEntity<String>? {
+    @GetMapping("/login")
+    fun login(@RequestBody body: JwtRequest): ResponseEntity<String>? {
         authenticate(body.getUsername(), body.getPassword())
         val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())
         val token = jwtTokenUtil!!.generateToken(userDetails)

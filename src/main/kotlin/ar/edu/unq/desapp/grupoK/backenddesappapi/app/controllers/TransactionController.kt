@@ -10,30 +10,36 @@ import org.springframework.web.bind.annotation.*
 
 @CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
+@RequestMapping("transaction")
 class TransactionController(private val transactionService: TransactionService) {
     @CrossOrigin
-    @RequestMapping("/transaction/details")
+    @GetMapping("/details")
     fun GetTransactionDetails(id: Long): ResponseEntity<TransactionDetailsDTO>{
-        var transaction =transactionService.GetTransactionDetailsDTOForId(id)
-        return ResponseEntity(transaction, HttpStatus.OK)
+        return ResponseEntity(transactionService.GetTransactionDetailsDTOForId(id), HttpStatus.OK)
     }
 
     @CrossOrigin
-    @RequestMapping("/transaction/create")
+    @RequestMapping("/create")
     fun CreateTransaction(@RequestBody dto:CreateTransactionDTO): ResponseEntity<Any>{
         return ResponseEntity(transactionService.CreateTransaction(dto), HttpStatus.CREATED)
     }
 
     @CrossOrigin
-    @RequestMapping("/transaction/all")
+    @GetMapping("/all")
     fun GetAllTransactions(): ResponseEntity<List<TransactionActivity>>{
-        var transactions  =transactionService.GetAllTransactions()
-        return ResponseEntity(transactions, HttpStatus.OK)
+        return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.FOUND)
     }
 
     @CrossOrigin
-    @RequestMapping("/transaction/apply")
+    @RequestMapping("/apply")
     fun ApplyToTransactions(id: Long, userEmail: String): ResponseEntity<Any>{
         return ResponseEntity(transactionService.ApplyToTransaction(id, userEmail),HttpStatus.OK)
+    }
+
+    @CrossOrigin
+    @PostMapping("/changeState")
+    fun ChangeTransactionState(id: Long, newState: State): ResponseEntity<HttpStatus> {
+        transactionService.ChangeTransactionState(id, newState)
+        return ResponseEntity(HttpStatus.OK)
     }
 }
