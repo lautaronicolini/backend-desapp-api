@@ -57,5 +57,15 @@ class UserService {
             seller.reputation = seller.reputation + 5
             buyer.reputation = buyer.reputation + 5
         }
+        userRepo!!.save(seller)
+        userRepo!!.save(buyer)
+    }
+
+    fun cancelationPenalty(userUpdaterEmail: String) {
+        if (userExists(userUpdaterEmail)) {
+            var user = findUsersByEmail(userUpdaterEmail)[0]
+            user.reputation -= 20
+            userRepo!!.save(user)
+        }
     }
 }

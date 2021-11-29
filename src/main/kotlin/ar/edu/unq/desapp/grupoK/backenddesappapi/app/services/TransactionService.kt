@@ -61,13 +61,16 @@ class TransactionService {
         }
     }
 
-    fun ChangeTransactionState(id: Long, newState: State)
+    fun ChangeTransactionState(id: Long, newState: State, userUpdaterEmail: String)
     {
         var entity = GetTransactionWithId(id)
         entity.stateHistory.AddState(newState)
         transactionRepo!!.save(entity)
         if (newState == State.CLOSED) {
             userService!!.updateUsersFromCompletedTransaction(entity)
+        }
+        if (newState == State.CANCELED) {
+            userService!!.cancelationPenalty(userUpdaterEmail)
         }
     }
 }

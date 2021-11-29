@@ -8,6 +8,7 @@ import ar.edu.unq.desapp.grupoK.backenddesappapi.app.services.TransactionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 
 @CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
@@ -41,8 +42,8 @@ class TransactionController(private val transactionService: TransactionService) 
 
     @CrossOrigin
     @PostMapping("/changeState")
-    fun ChangeTransactionState(id: Long, newState: State): ResponseEntity<HttpStatus> {
-        transactionService.ChangeTransactionState(id, newState)
+    fun ChangeTransactionState(@RequestBody id: Long, newState: State, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
+        transactionService.ChangeTransactionState(id, newState, userUpdaterEmail)
         return ResponseEntity(HttpStatus.OK)
     }
 }
