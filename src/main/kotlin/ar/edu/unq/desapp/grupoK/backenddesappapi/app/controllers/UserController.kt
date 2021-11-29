@@ -37,7 +37,7 @@ class UserController (private val userService : UserService) {
     }
 
     @CrossOrigin
-    @PostMapping("/login")
+    @GetMapping("/login")
     fun login(@RequestBody body: JwtRequest): ResponseEntity<String>? {
         authenticate(body.getUsername(), body.getPassword())
         val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())

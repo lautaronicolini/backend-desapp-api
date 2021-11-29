@@ -1,11 +1,8 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain
 
 import ar.edu.unq.desapp.grupoK.backenddesappapi.app.domain.dto.CreateTransactionDTO
-import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.temporal.TemporalAmount
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -20,7 +17,7 @@ import javax.persistence.*
         var unitPriceARS: String = ""
         var buyerEmail: String? = null
         var sellerEmail: String? = null
-        @OneToOne
+        @OneToOne(cascade=[CascadeType.ALL])
         var stateHistory: StateHistory = StateHistory()
 
         constructor(dto:CreateTransactionDTO):this(){
@@ -39,6 +36,6 @@ import javax.persistence.*
         @JvmName("getTime1")
         fun getTimeInHours(): String {
             val currentDateTime = LocalDateTime.now()
-            return currentDateTime.format(DateTimeFormatter.ofPattern("DD:MM:YYYY HH:mm:SS"))
+            return currentDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"))
         }
     }

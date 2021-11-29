@@ -44,7 +44,7 @@ class UserService {
         return getAllUsers().filter { user -> user.email == email }
     }
 
-    fun UpdateUsersFromCompletedTransaction(transaction: TransactionActivity) {
+    fun updateUsersFromCompletedTransaction(transaction: TransactionActivity) {
         var dateClosed = LocalDateTime.parse(transaction.stateHistory.GetStateChangeDate(State.CLOSED))
         var dateApplied = LocalDateTime.parse(transaction.stateHistory.GetStateChangeDate(State.APPLIED))
         var seller = findUsersByEmail(transaction.sellerEmail!!)[0]

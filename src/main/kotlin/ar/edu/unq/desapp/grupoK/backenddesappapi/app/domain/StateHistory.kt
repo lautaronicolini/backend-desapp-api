@@ -12,6 +12,7 @@ class StateHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Long = 0
     @ElementCollection
+    @OneToMany(cascade=[CascadeType.ALL])
     private val stateUpdates: MutableList<StateUpdate> = mutableListOf(StateUpdate(State.NEW))
 
     fun AddState(newState: State)
@@ -38,5 +39,7 @@ class StateUpdate(state: State) {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
     val state: State = state
-    val updatedOn: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("DD:MM:YYYY HH:mm:SS"))
+    val updatedOn: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"))
+
+    constructor() : this(State.NEW) {}
 }
