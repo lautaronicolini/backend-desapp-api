@@ -13,6 +13,7 @@ class TransactionDetailsDTO(
     sellerEmail:String,
     buyerEmail:String,
     operationType: String,
+    stateHistory: String
 
 ) {
     var transactionId = transactionId
@@ -27,4 +28,5 @@ class TransactionDetailsDTO(
     var sellerEmail = sellerEmail
     var buyerEmail = buyerEmail
     var operationType = operationType
+    var stateHistory = stateHistory
 }
