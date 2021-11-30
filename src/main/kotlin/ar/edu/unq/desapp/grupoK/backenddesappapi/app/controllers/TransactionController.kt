@@ -29,7 +29,7 @@ class TransactionController(private val transactionService: TransactionService) 
     @CrossOrigin
     @GetMapping("/all")
     fun GetAllTransactions(): ResponseEntity<List<TransactionActivity>>{
-        return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.FOUND)
+        return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.OK)
     }
 
     @CrossOrigin
@@ -40,8 +40,13 @@ class TransactionController(private val transactionService: TransactionService) 
 
     @CrossOrigin
     @PostMapping("/changeState")
-    fun ChangeTransactionState(@RequestBody id: Long, newState: State, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
-        transactionService.ChangeTransactionState(id, newState, userUpdaterEmail)
+    fun ChangeTransactionState(@RequestBody id: Long, newState: String, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
+        var state : State? = null
+        if (newState=="APPLIED"){state= State.APPLIED}
+        if (newState=="TRANSFERENCE_DONE"){state= State.TRANSFERENCE_DONE}
+        if (newState=="CLOSED"){state=State.CLOSED}
+        if (newState=="CANCELED"){state=State.CANCELED}
+            transactionService.ChangeTransactionState(id, state!!, userUpdaterEmail)
         return ResponseEntity(HttpStatus.OK)
     }
 }
