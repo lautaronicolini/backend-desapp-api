@@ -17,7 +17,7 @@ class StateHistory {
 
     fun AddState(newState: State)
     {
-        if (stateUpdates.any{su -> su.state == newState}) {
+        if (ContainsState(newState)) {
             throw Exception("Transaction has been or is already in state $newState")
         } else {
             stateUpdates.add(StateUpdate(newState))
@@ -25,11 +25,15 @@ class StateHistory {
     }
 
     fun GetStateChangeDate(state:State) :String {
-        if (stateUpdates.any{su -> su.state == state}) {
+        if (ContainsState(state)) {
             return stateUpdates.first{su -> su.state == state}.updatedOn
         } else {
             throw Exception("Transaction has not been in state $state")
         }
+    }
+
+    fun ContainsState(state:State): Boolean {
+        return stateUpdates.any{su -> su.state == state}
     }
 }
 
@@ -39,7 +43,7 @@ class StateUpdate(state: State) {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
     val state: State = state
-    val updatedOn: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"))
+    val updatedOn: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
 
     constructor() : this(State.NEW) {}
 }

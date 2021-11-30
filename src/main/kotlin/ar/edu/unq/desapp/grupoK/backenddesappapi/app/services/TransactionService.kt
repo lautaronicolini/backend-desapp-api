@@ -71,11 +71,20 @@ class TransactionService {
     fun ChangeTransactionState(id: Long, newState: State, userUpdaterEmail: String)
     {
         var entity = GetTransactionWithId(id)
-        entity.stateHistory.AddState(newState)
-        transactionRepo!!.save(entity)
+
         if (newState == State.CLOSED) {
-            userService!!.updateUsersFromCompletedTransaction(entity)
+            if (entity.stateHistory.ContainsState(State.TRANSFERENCE_DONE)) {
+                entity.stateHistory.AddState(newState)
+                userService!!.updateUsersFromCompletedTransaction(entity)
+            } else {
+                throw Exception("Cannot change state to 'CLOSED' because there is no record of 'TRANSFERENCE_DONE'")
+            }
+        } else {
+            entity.stateHistory.AddState(newState)
         }
+
+        transactionRepo!!.save(entity)
+
         if (newState == State.CANCELED) {
             userService!!.cancelationPenalty(userUpdaterEmail)
         }

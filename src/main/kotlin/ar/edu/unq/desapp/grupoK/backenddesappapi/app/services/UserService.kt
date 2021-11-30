@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.Period
+import java.time.*
+import java.time.format.DateTimeFormatter
 
 @Repository
 @Service
@@ -45,8 +43,8 @@ class UserService {
     }
 
     fun updateUsersFromCompletedTransaction(transaction: TransactionActivity) {
-        var dateClosed = LocalDateTime.parse(transaction.stateHistory.GetStateChangeDate(State.CLOSED))
-        var dateApplied = LocalDateTime.parse(transaction.stateHistory.GetStateChangeDate(State.APPLIED))
+        var dateClosed = LocalDateTime.parse(transaction.stateHistory.GetStateChangeDate(State.CLOSED), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+        var dateApplied = LocalDateTime.parse(transaction.stateHistory.GetStateChangeDate(State.APPLIED), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
         var seller = findUsersByEmail(transaction.sellerEmail!!)[0]
         var buyer = findUsersByEmail(transaction.buyerEmail!!)[0]
 

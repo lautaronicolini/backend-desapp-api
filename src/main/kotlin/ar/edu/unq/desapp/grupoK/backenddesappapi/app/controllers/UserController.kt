@@ -30,7 +30,6 @@ class UserController (private val userService : UserService) {
     private val userDetailsService: JwtUserDetailsService? = null
     @Autowired
     private val authenticationManager: AuthenticationManager? = null
-    val authController : JwtAuthenticationController? = null
 
     @GetMapping("/hello")
     open fun hello(): ResponseEntity<String?>? {

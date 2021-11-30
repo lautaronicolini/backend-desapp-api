@@ -21,7 +21,7 @@ class TransactionController(private val transactionService: TransactionService) 
     }
 
     @CrossOrigin
-    @RequestMapping("/create")
+    @PostMapping("/create")
     fun CreateTransaction(@RequestBody dto:CreateTransactionDTO): ResponseEntity<Any>{
         return ResponseEntity(transactionService.CreateTransaction(dto), HttpStatus.CREATED)
     }
@@ -33,7 +33,7 @@ class TransactionController(private val transactionService: TransactionService) 
     }
 
     @CrossOrigin
-    @RequestMapping("/apply")
+    @PostMapping("/apply")
     fun ApplyToTransactions(id: Long, userEmail: String): ResponseEntity<Any>{
         return ResponseEntity(transactionService.ApplyToTransaction(id, userEmail),HttpStatus.OK)
     }
