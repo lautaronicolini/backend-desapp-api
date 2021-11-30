@@ -24,16 +24,16 @@ class TransactionService {
         return  transactionRepo!!.save(entity).id
     }
 
-    fun GetTransactionWithId(id:Long):TransactionActivity {
-        if (transactionRepo!!.existsById(id.toInt())) {
-            return transactionRepo!!.findById(id.toInt()).get()
+    fun GetTransactionWithId(id:Int):TransactionActivity {
+        if (transactionRepo!!.existsById(id)) {
+            return transactionRepo!!.findById(id).get()
        }
         else {
             throw Exception("Element with id: $id not found")
         }
     }
 
-    fun GetTransactionDetailsDTOForId(id:Long):TransactionDetailsDTO{
+    fun GetTransactionDetailsDTOForId(id:Int):TransactionDetailsDTO{
         var entity = GetTransactionWithId(id)
         var price = entity.nominalAmount.toBigDecimal() * entity.unitPriceARS.toBigDecimal()
         var creatorEmail = if (entity.operationType == OperationType.BUY) entity.buyerEmail!! else entity.sellerEmail!!
@@ -49,7 +49,7 @@ class TransactionService {
         return transactionRepo!!.findAll().toList()
     }
 
-    fun ApplyToTransaction(id: Long, userEmail: String): String {
+    fun ApplyToTransaction(id: Int, userEmail: String): String {
         var entity = GetTransactionWithId(id)
         var result = ""
         if (entity.buyerEmail != userEmail && entity.sellerEmail != userEmail) {
@@ -68,7 +68,7 @@ class TransactionService {
         }
     }
 
-    fun ChangeTransactionState(id: Long, newState: State, userUpdaterEmail: String)
+    fun ChangeTransactionState(id: Int, newState: State, userUpdaterEmail: String)
     {
         var entity = GetTransactionWithId(id)
 
