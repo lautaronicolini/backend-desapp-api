@@ -13,7 +13,7 @@ class StateHistory {
     val id : Long = 0
     @ElementCollection
     @OneToMany(cascade=[CascadeType.ALL])
-    private val stateUpdates: MutableList<StateUpdate> = mutableListOf(StateUpdate(State.NEW))
+     val stateUpdates: MutableList<StateUpdate> = mutableListOf(StateUpdate(State.NEW))
 
     fun AddState(newState: State)
     {

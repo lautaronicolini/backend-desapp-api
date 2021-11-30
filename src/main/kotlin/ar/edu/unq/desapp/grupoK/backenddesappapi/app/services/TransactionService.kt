@@ -42,7 +42,7 @@ class TransactionService {
         var sellerEmail = if(entity.sellerEmail==null){""} else entity.sellerEmail!!
 
         return TransactionDetailsDTO(entity.id,entity.time, entity.crypto, entity.nominalAmount, entity.unitPriceARS, price.toString(), creatorUser.name,
-            creatorUser.lastName, creatorUser.reputation.toString(),sellerEmail,buyerEmail, entity.operationType.toString())
+            creatorUser.lastName, creatorUser.reputation.toString(),sellerEmail,buyerEmail, entity.operationType.toString(),entity.stateHistory.stateUpdates.last().state.toString())
     }
 
     fun GetAllTransactions():List<TransactionActivity>{
