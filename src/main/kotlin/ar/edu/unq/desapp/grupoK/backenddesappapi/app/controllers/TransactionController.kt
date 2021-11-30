@@ -46,8 +46,7 @@ class TransactionController(private val transactionService: TransactionService) 
         if (newState=="TRANSFERENCE_DONE"){state= State.TRANSFERENCE_DONE}
         if (newState=="CLOSED"){state=State.CLOSED}
         if (newState=="CANCELED"){state=State.CANCELED}
-        transactionService.ChangeTransactionState(id, state!!)
-            transactionService.ChangeTransactionState(id, newState, userUpdaterEmail)
+            transactionService.ChangeTransactionState(id, state!!, userUpdaterEmail)
         return ResponseEntity(HttpStatus.OK)
     }
 }
