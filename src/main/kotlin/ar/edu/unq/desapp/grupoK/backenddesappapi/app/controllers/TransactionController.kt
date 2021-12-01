@@ -40,7 +40,7 @@ class TransactionController(private val transactionService: TransactionService) 
 
     @CrossOrigin
     @PostMapping("/changeState")
-    fun ChangeTransactionState(@RequestBody id: Int, newState: String, userUpdaterEmail: String ): ResponseEntity<HttpStatus> {
+    fun ChangeTransactionState(id: Int, newState: String, userUpdaterEmail: String ): ResponseEntity<HttpStatus> {
         var state : State? = null
         if (newState=="APPLIED"){state= State.APPLIED}
         if (newState=="TRANSFERENCE_DONE"){state= State.TRANSFERENCE_DONE}
