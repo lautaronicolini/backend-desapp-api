@@ -70,11 +70,12 @@ internal class ArchunitApplicationTests {
 
             .layer("Controller").definedBy("..controllers..")
             .layer("Service").definedBy("..services..")
+            .layer("Config").definedBy("..config..")
             .layer("Repository").definedBy("..repositories..")
 
 
             .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
-            //.whereLayer("Service").mayOnlyBeAccessedByLayers("Controller", "Service")
+            .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller", "Service", "Config")
             .whereLayer("Repository").mayOnlyBeAccessedByLayers("Service")
             .check(importedClasses)
     }
