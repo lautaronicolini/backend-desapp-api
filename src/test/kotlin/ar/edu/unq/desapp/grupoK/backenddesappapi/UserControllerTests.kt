@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import io.mockk.impl.annotations.MockK
 import org.junit.jupiter.api.BeforeEach
-import org.springframework.http.HttpStatus.
+import org.springframework.http.HttpStatus
 
 @SpringBootTest
 class UserControllerTests {

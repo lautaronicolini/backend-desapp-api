@@ -41,6 +41,9 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-aop:2.5.6")
 
+	testImplementation("com.tngtech.archunit:archunit-junit4:0.12.0")
+
+
 }
 
 tasks.withType<KotlinCompile> {
