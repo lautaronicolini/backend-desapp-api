@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 class TransactionController(private val transactionService: TransactionService) {
     @CrossOrigin
     @GetMapping("/details")
-    fun getTransactionDetails(id: Long): ResponseEntity<TransactionDetailsDTO>{
+    fun getTransactionDetails(id: Int): ResponseEntity<TransactionDetailsDTO>{
         return ResponseEntity(transactionService.GetTransactionDetailsDTOForId(id), HttpStatus.OK)
     }
 
@@ -34,13 +34,13 @@ class TransactionController(private val transactionService: TransactionService) 
 
     @CrossOrigin
     @GetMapping("/apply")
-    fun applyToTransactions(id: Long, userEmail: String): ResponseEntity<Any>{
+    fun applyToTransactions(id: Int, userEmail: String): ResponseEntity<Any>{
         return ResponseEntity(transactionService.ApplyToTransaction(id, userEmail),HttpStatus.OK)
     }
 
     @CrossOrigin
     @PostMapping("/changeState")
-    fun changeTransactionState(@RequestBody id: Long, newState: String, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
+    fun changeTransactionState(id: Int, newState: String, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
         var state : State? = null
         if (newState=="APPLIED"){state= State.APPLIED}
         if (newState=="TRANSFERENCE_DONE"){state= State.TRANSFERENCE_DONE}
