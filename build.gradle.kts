@@ -39,7 +39,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis:2.5.4")
 	implementation("org.springframework.boot:spring-boot-starter-cache:2.5.4")
 
-	implementation("org.springframework.boot:spring-boot-starter-aop:2.5.6")
+	implementation("org.springframework.boot:spring-boot-starter-aop:2.6.1")
 
 }
 

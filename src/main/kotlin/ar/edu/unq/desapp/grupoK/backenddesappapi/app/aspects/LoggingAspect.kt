@@ -1,8 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi.app.aspects
 
-import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
-import org.aspectj.lang.annotation.AfterThrowing
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
@@ -15,27 +13,8 @@ import java.util.*
 class LoggingAspect() {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
-    /**
-     * Pointcut that matches all repositories, services and Web REST endpoints.
-     */
-    @Pointcut(
-        "within(@org.springframework.stereotype.Repository *)" +
-                " || within(@org.springframework.stereotype.Service *)" +
-                " || within(@org.springframework.web.bind.annotation.RestController *)"
-    )
-    fun springBeanPointcut() {
-        // Method is empty as this is just a Pointcut, the implementations are in the advices.
-    }
-
-    /**
-     * Pointcut that matches all Spring beans in the application's main packages.
-     */
-    @Pointcut(
-        ("within(net.guides.springboot2.springboot2jpacrudexample..*)" +
-                " || within(net.guides.springboot2.springboot2jpacrudexample.service..*)" +
-                " || within(net.guides.springboot2.springboot2jpacrudexample.controller..*)")
-    )
-    fun applicationPackagePointcut() {
+    @Pointcut(("within(ar.edu.unq.desapp.grupoK.backenddesappapi.app.controllers..*)"))
+    fun controllersPointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
 
@@ -45,13 +24,13 @@ class LoggingAspect() {
      * @param joinPoint join point for advice
      * @param e exception
      */
-    @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
+    /*@AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
     fun logAfterThrowing(joinPoint: JoinPoint, e: Throwable) {
         log.error(
             "Exception in {}.{}() with cause = {}", joinPoint.signature.declaringTypeName,
             joinPoint.signature.name, if (e.cause != null) e.cause else "NULL"
         )
-    }
+    }*/
 
     /**
      * Advice that logs when a method is entered and exited.
@@ -60,23 +39,17 @@ class LoggingAspect() {
      * @return result
      * @throws Throwable throws IllegalArgumentException
      */
-    @Around("applicationPackagePointcut() && springBeanPointcut()")
+    @Around("controllersPointcut()")
     @Throws(Throwable::class)
     fun logAround(joinPoint: ProceedingJoinPoint): Any {
-        if (log.isDebugEnabled) {
-            log.debug(
-                "Enter: {}.{}() with argument[s] = {}", joinPoint.signature.declaringTypeName,
-                joinPoint.signature.name, Arrays.toString(joinPoint.args)
-            )
-        }
+        val start = System.currentTimeMillis()
+
         try {
             val result = joinPoint.proceed()
-            if (log.isDebugEnabled) {
-                log.debug(
-                    "Exit: {}.{}() with result = {}", joinPoint.signature.declaringTypeName,
-                    joinPoint.signature.name, result
-                )
-            }
+            val executionTime = System.currentTimeMillis() - start
+            log.debug("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            log.debug("LOG AOP: {}.{}() with arguments = {} and result = {} - Execution duration: {}ms.", joinPoint.signature.declaringTypeName, joinPoint.signature.name, Arrays.toString(joinPoint.args), result, executionTime)
+            log.debug("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
             return result
         } catch (e: IllegalArgumentException) {
             log.error(

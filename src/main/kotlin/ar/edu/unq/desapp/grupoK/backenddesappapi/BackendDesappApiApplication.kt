@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoK.backenddesappapi
 
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.cache.annotation.EnableCaching

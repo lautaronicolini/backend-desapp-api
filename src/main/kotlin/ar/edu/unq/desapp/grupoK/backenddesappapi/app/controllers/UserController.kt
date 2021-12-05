@@ -43,7 +43,6 @@ class UserController (private val userService : UserService) {
         val userDetails = userDetailsService!!.loadUserByUsername(body.getUsername())
         val token = jwtTokenUtil!!.generateToken(userDetails)
         return ResponseEntity.ok(token)
-        //var response :JwtResponse  = JwtResponse(authController!!.createAuthenticationToken(body).toString())
     }
 
     @CrossOrigin(origins = ["http://localhost:3000"])
@@ -62,7 +61,7 @@ class UserController (private val userService : UserService) {
 
           userService.createUser(user)
       } catch (e :Exception){
-          return  ResponseEntity.badRequest().body("user could not be registered: ${e.message}")
+          return ResponseEntity.badRequest().body("user could not be registered: ${e.message}")
       }
         return ResponseEntity.ok("User was registered")
     }

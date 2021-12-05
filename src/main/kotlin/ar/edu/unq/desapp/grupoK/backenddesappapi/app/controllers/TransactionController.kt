@@ -16,31 +16,31 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 class TransactionController(private val transactionService: TransactionService) {
     @CrossOrigin
     @GetMapping("/details")
-    fun GetTransactionDetails(id: Long): ResponseEntity<TransactionDetailsDTO>{
+    fun getTransactionDetails(id: Long): ResponseEntity<TransactionDetailsDTO>{
         return ResponseEntity(transactionService.GetTransactionDetailsDTOForId(id), HttpStatus.OK)
     }
 
     @CrossOrigin
     @PostMapping("/create")
-    fun CreateTransaction(@RequestBody dto:CreateTransactionDTO): ResponseEntity<Any>{
+    fun createTransaction(@RequestBody dto:CreateTransactionDTO): ResponseEntity<Any>{
         return ResponseEntity(transactionService.CreateTransaction(dto), HttpStatus.CREATED)
     }
 
     @CrossOrigin
     @GetMapping("/all")
-    fun GetAllTransactions(): ResponseEntity<List<TransactionActivity>>{
+    fun getAllTransactions(): ResponseEntity<List<TransactionActivity>>{
         return ResponseEntity(transactionService.GetAllTransactions(), HttpStatus.OK)
     }
 
     @CrossOrigin
-    @PostMapping("/apply")
-    fun ApplyToTransactions(id: Long, userEmail: String): ResponseEntity<Any>{
+    @GetMapping("/apply")
+    fun applyToTransactions(id: Long, userEmail: String): ResponseEntity<Any>{
         return ResponseEntity(transactionService.ApplyToTransaction(id, userEmail),HttpStatus.OK)
     }
 
     @CrossOrigin
     @PostMapping("/changeState")
-    fun ChangeTransactionState(@RequestBody id: Long, newState: String, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
+    fun changeTransactionState(@RequestBody id: Long, newState: String, userUpdaterEmail: String): ResponseEntity<HttpStatus> {
         var state : State? = null
         if (newState=="APPLIED"){state= State.APPLIED}
         if (newState=="TRANSFERENCE_DONE"){state= State.TRANSFERENCE_DONE}
